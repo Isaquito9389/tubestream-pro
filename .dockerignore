@@ -1,0 +1,39 @@
+# caches & virtualenvs
+.cache
+.venv
+venv
+env
+
+# Python artifacts
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+
+# build / package
+build
+dist
+
+# local files / secrets
+.env
+*.pem
+*.key
+
+# editor / OS
+.vscode
+.idea
+.DS_Store
+
+# node (if present)
+node_modules
+
+# folders created by the app or that often contain caches
+downloads
+static
+
+# Ignore Dockerfile artifacts
+*.tar
+
+# Ignore pip cache folders if present
+pip-wheel-metadata
