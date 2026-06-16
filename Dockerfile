@@ -1,6 +1,3 @@
-# ============================================================
-# TubeStream Pro — Dockerfile pour Railway / Render
-# ============================================================
 FROM python:3.11-slim
 
 # Install system dependencies + ffmpeg for audio extraction
@@ -17,15 +14,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Create directories
-RUN mkdir -p templates downloads
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Set environment variables
-ENV DOWNLOAD_DIR=/app/downloads
-ENV FLASK_DEBUG=false
+# Create required directories
+RUN mkdir -p templates downloads static
 
-# Expose port
-EXPOSE ${PORT:-5000}
+# Expose port (Railway injecte PORT au runtime)
+EXPOSE 5000
 
-# Run application with proper shell variable expansion
-CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:${PORT:-5000} --timeout 300 --workers 4 --threads 2 --keep-alive 120 --access-logfile - --error-logfile -"]
+# Utiliser entrypoint pour résoudre $PORT correctement
+ENTRYPOINT ["/entrypoint.sh"]
