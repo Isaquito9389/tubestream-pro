@@ -21,19 +21,11 @@ COPY . .
 RUN mkdir -p templates downloads
 
 # Set environment variables
-ENV PORT=5000
 ENV DOWNLOAD_DIR=/app/downloads
 ENV FLASK_DEBUG=false
 
 # Expose port
-EXPOSE $PORT
+EXPOSE ${PORT:-5000}
 
-# Run application
-CMD gunicorn app:app \
-    --bind 0.0.0.0:$PORT \
-    --timeout 300 \
-    --workers 4 \
-    --threads 2 \
-    --keep-alive 120 \
-    --access-logfile - \
-    --error-logfile -
+# Run application with proper shell variable expansion
+CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:${PORT:-5000} --timeout 300 --workers 4 --threads 2 --keep-alive 120 --access-logfile - --error-logfile -"]
