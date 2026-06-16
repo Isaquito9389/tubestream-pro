@@ -29,7 +29,7 @@ ENV FLASK_DEBUG=false
 EXPOSE $PORT
 
 # Run application
-CMD gunicorn web_app:app \
+CMD gunicorn app:app \
     --bind 0.0.0.0:$PORT \
     --timeout 300 \
     --workers 4 \
